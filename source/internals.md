@@ -4,9 +4,7 @@ Bolt Internals
 Bolt is an application built on top of the awesome [Silex micro-
 framework](http://silex.sensiolabs.org), and uses a lot of components from the
 [Symfony framework](http://symfony.com/components). Bolt strives to adhere to
-[the PSR-2 coding style](https://github.com/php-fig/fig-
-standards/blob/master/accepted/PSR-2-coding-style-guide.md). When writing your
-extensions, you should try to do the same.
+[the PSR-2 coding style](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md). When writing your extensions, you should try to do the same.
 
 This chapter serves as a reference guide for those who want to get the most out
 of the templates, those who want to create extensions or basically anybody who's
@@ -18,16 +16,15 @@ Every request to a page on a Bolt website is routed to a Silex controller,
 regardless of whether the request is for a page in the backend, frontend or
 'asynchronous'.
 
-There are four files that contain the controller collections:
-`app/src/Bolt/Controllers/Backend.php`, `app/src/Bolt/Controllers/Frontend.php`,
-`app/src/Bolt/Controllers/Async.php` and `app/src/Bolt/Controllers/Routing.php`.
+There are four files that contain the controller collections, located in 
+`app/src/Bolt/Controllers/`: `Backend.php`, `Frontend.php`, `Async.php` and `Routing.php`.
 As such, they are all in the `\Bolt\Controllers` namespace. They are 'set up' in
 `app/app.php`. The routes in `Backend.php` are all pretty straightforward. The
 ones in `Async.php` are used for 'ajaxy' requests, like the 'latest activity'
 widget on the dashboard. Next we have `Routing.php` and `Frontend.php`. The
-first one is the actual Controller that parses the routes found in 'routing.yml'
+first one is the actual Controller that parses the routes found in `routing.yml`
 and the latter contains the methods for all standard routes as defined in
-'routes.yml'. You can modify the 'routing.yml' to suit your own needs. Examples
+`routes.yml`. You can modify the `routing.yml` to suit your own needs. Examples
 are included.
 
 Templating
@@ -40,8 +37,8 @@ in the Bolt templates. We've added a few tags of our own. Browse
 `app/src/Bolt/TwigExtension.php` and `app/src/Bolt/SetcontentTokenParser.php`
 for details.
 
-More information on this subject can be found in [Templates and Routes
-](templates-routes) and [Content in Templates](content-in-templates)
+More information on this subject can be found in [Templates and Routes](templates-routes) 
+and [Content in Templates](content-in-templates).
 
 The "Model"
 -----------
@@ -53,9 +50,8 @@ if the definitions in `contenttypes.yml` matches the database columns, and if it
 doesn't it urges the user to go to the 'repair database' screen.
 
 Even though Bolt strives to be as simple as possible, it makes sense to think of
-Bolt as an [MVC application](http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%
-80%93controller). Silex provides the Controller part, the Twig templates are the
-View and the Contenttypes define the Model part.
+Bolt as an [MVC application](http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller). 
+Silex provides the Controller part, the Twig templates are the View and the Contenttypes define the Model part.
 
 All access to the content and the contentypes is done through the Storage class.
 Records of content have a Content class. Browse the files
@@ -72,7 +68,7 @@ application', and most of the components that are used in Bolt are created as
 services via Dependency Injection. If you want to know more about these
 subjects, we heartily recommend these articles about Dependency Injection:
 
-  - [An introduction to Pimple and Service Containers](http://jtreminio.com/tag/dependency-injection/)
+  - [An introduction to Pimple and Service Containers](https://jtreminio.com/2012/10/an-introduction-to-pimple-and-service-containers/)
   - [What is Dependency Injection?](http://fabien.potencier.org/article/11/what-is-dependency-injection)
 
 In Bolt, this `$app` will be available in the majority of the code, and so are
@@ -81,14 +77,13 @@ all of the services, libraries and variables that are part of the application.
 All of these are created in `app/bootstrap.php`. Read the code in that file, to
 get a feeling for what can be accessed through the `$app` object. Most of the
 services defined there are Symfony components, about which you can read on the
-Silex Documentation page on [Service
-Providers](http://silex.sensiolabs.org/documentation), or on the [Symfony
-Components page](http://symfony.com/components). The next largest group are the
-Bolt components. These can be recognized by the `Bolt\` namespace. These
+Silex Documentation page on [Service Providers](http://silex.sensiolabs.org/documentation), 
+or on the [Symfony Components page](http://symfony.com/components). 
+The next largest group are the Bolt components. These can be recognized by the `Bolt\` namespace. These
 components are autoloaded, and can be found in `app/src/Bolt/`.
 
-Debug Bar, {{ print() }} and krumo()
-----------------------------------------------
+Debug Bar, {{ print() }} and dump()
+-----------------------------------
 If you're about to go poking through the Bolt code, there are a few tools that
 are simply invaluable for doing so.
 
@@ -96,12 +91,12 @@ are simply invaluable for doing so.
 
 If you're logged in, and 'debug: true' is set in `config.yml`, you'll see the
 'Debug nut' in the lower right corner of all pages of both the frontend and the
-backend of the Bolt website. Click it to open the debug bar.
+backend of the Bolt website. Click it to open the Symfony profiler bar.
 
-<a href="/files/debugbar.png" class="fancybox"><img src="/files/debugbar.png" style="width: 100%"></a><br>
+<a href="/files/toolbar.png" class="fancybox"><img src="/files/toolbar.png" style="width: 100%"></a><br>
 
-This debug bar contains a lot of useful information to see what's going on
-behind the screens. Click the different tabs to see information about the
+This profiler bar contains a lot of useful information to see what's going on
+behind the scenes. Click the different tabs to see information about the
 current request, used templates, matched routes, used queries, server variables
 and a lot more.
 
@@ -121,14 +116,14 @@ $this->app['debugbar'] = false;
 $this->app['debugbar'] = true;
 </pre>
 
-### {{ print() }} and krumo()
+### {{ dump() }} and Dumper::dump()
 
 If you're coding and you want to get a quick look at whatever variable or object
-you're trying to manipulate, you can dump it's contents to the browser. In
+you're trying to manipulate, you can dump its contents to the browser. In
 templates, use the following:
 
 <pre class="brush: html">
-    {{ print(variable) }}
+    {{ dump(variable) }}
 </pre>
 
 The `variable` can be a normal variable, a Record or multiple records of
@@ -139,7 +134,7 @@ Content, or other stuff.
 In your code you can also dump variables and objects, like this:
 
 <pre class="brush: php">
-    krumo($variable);
+    \Dumper::dump($variable);
 </pre>
 
 Like above, the `$variable` can be a normal variable, an object or whatever.
@@ -147,6 +142,25 @@ Note that Bolt has built-in protection for when you're tyring to 'dump' Silex or
 Symfony objects like `$app` or a variable that's `\Bolt\Application`. Since these
 would be too large to render because of internal references and recursion, they
 are not expanded further.
+
+### {{ backtrace() }} and Dumper::backtrace()
+
+Using this function you can get a backtrace throught the code to the current
+point in the execution. Useful for when you're debugging something, and you're
+not quite sure how you got here to begin with. In your templates, use the following: 
+
+<pre class="brush: html">
+    {{ backtrace() }}
+</pre>
+
+In your code you can also use backtrace, like this:
+
+<pre class="brush: php">
+    \Dumper::backtrace(10);
+</pre>
+
+The optional parameter denotes the maximum depth of the output of the backtrace. 
+
 
 Object Reference
 ----------------
@@ -166,16 +180,16 @@ You can get any setting through this array. For instance, to get the value for
 'homepage_template', use this:
 
 <pre class="brush: php">
-$app['config']['general']['homepage_template']
+$app['config']->get('general/homepage_template')
 </pre>
 
 These variables are also accessible in your templates:
 
-<pre class="brush: html">
-    {{ print(config.general.homepage_template) }}
+<pre class="brush: html"> 
+    {{ print(config.get('general/homepage_template')) }}
 </pre>
 
-Remember to use `{{ print() }}` and `krumo()` to dump these arrays to
+Remember to use `{{ dump() }}` and `\Dumper::dump()` to dump these arrays to
 inspect the current values.
 
 ### $app['paths']
@@ -183,38 +197,36 @@ inspect the current values.
 The 'paths' array contains references to paths, folders and links in your current website.
 
 <pre class="brush: php">
-echo "&lt;pre>\n" . krumo($app['paths'], true) . "&lt;/pre>\n";
+echo "&lt;pre>\n" . \Dumper::dump($app['paths'], true) . "&lt;/pre>\n";
 </pre>
 
 The path variables are also accessible in your templates:
 
 <pre class="brush: html">
-    {{ print(paths) }}
+    {{ dump(paths) }}
 </pre>
 
 A sample printout of the 'paths' might look like this:
 
 <pre class="brush: plain">
-arr(17)
-[
-    "hostname"     => str(14) "bolt.localhost"
-    "root"         => str(1) "/"
-    "rootpath"     => str(29) "/var/www/bolt"
-    "theme"        => str(17) "/theme/base-2013/"
-    "themepath"    => str(45) "/var/www/bolt/theme/base-2013"
-    "app"          => str(5) "/app/"
-    "apppath"      => str(33) "/var/www/bolt/app"
-    "bolt"         => str(6) "/bolt/"
-    "async"        => str(7) "/async/"
-    "files"        => str(7) "/files/"
-    "filespath"    => str(35) "/var/www/bolt/files"
-    "canonical"    => str(14) "bolt.localhost"
-    "current"      => str(22) "/entry/age-sane-inquam"
-    "hosturl"      => str(21) "http://bolt.localhost"
-    "rooturl"      => str(22) "http://bolt.localhost/"
-    "canonicalurl" => str(43) "http://bolt.localhost/entry/age-sane-inquam"
-    "currenturl"   => str(43) "http://bolt.localhost/entry/age-sane-inquam"
-]
+… arr(17) …
+  hostname str(14) => bolt.localhost
+  root str(1) => /
+  rootpath str(21) => /Users/bob/Sites/bolt
+  theme str(17) => /theme/base-2013/
+  themepath str(37) => /Users/bob/Sites/bolt/theme/base-2013
+  app str(5) => /app/
+  apppath str(25) => /Users/bob/Sites/bolt/app
+  bolt str(6) => /bolt/
+  async str(7) => /async/
+  files str(7) => /files/
+  filespath str(27) => /Users/bob/Sites/bolt/files
+  canonical str(14) => bolt.localhost
+  current str(43) => /kitchensink/sed-residamus-inquit-si-placet
+  hosturl str(21) => http://bolt.localhost
+  rooturl str(22) => http://bolt.localhost/
+  canonicalurl str(64) => http://bolt.localhost/kitchensink/sed-residamus-inquit-si-placet
+  currenturl str(64) => http://bolt.localhost/kitchensink/sed-residamus-inquit-si-placet
 </pre>
 
 
@@ -237,7 +249,7 @@ $stmt->bindValue(1, $value);
 $stmt->bindValue(2, $id);
 $res = $stmt->execute();
 
-echo "Result was: " . krumo($res);
+echo "Result was: " . \Dumper::dump($res);
 </pre>
 
 Check `app/src/Bolt/Storage.php` for a lot of examples using the DBAL.
@@ -306,6 +318,14 @@ the Bolt documentation, as well as on the Twig website:
   - The [Twig website](http://twig.sensiolabs.org/)
   - [Templates in Bolt](templates)
 
+Note: You should not directly use this object, normally. Instead, use `$app['render']`. 
+See below.
+
+### $app['render']
+
+This is an object used as a wrapper around Twig's render functionality. If
+enabled, it also takes care of caching the results.
+
 Most controllers return a rendered Twig template as a result, but you can also
 render a (sub)template as HTML, process it further if needed, and return that as
 part of an extension or callback.
@@ -315,7 +335,7 @@ and `app/app_async.php` for details. To use a template in your own code as part
 of the result, see this example:
 
 <pre class="brush: php">
-$html = $app['twig']->render("SimpleForms/assets/bla.twig", array('form' =>  $data));
+$html = $app['render']->render("assets/bla.twig", array('form' =>  $data));
 </pre>
 
 Note that the template file must be somewhere in (or below) the allowed folders
